@@ -1,0 +1,49 @@
+name: crypto_currency_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^1.0.2
+  firebase_auth: ^1.0.1
+  google_fonts: ^2.0.0
+  flutter_launcher_icons: ^0.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/cryptocurrency.png"
+
+flutter:
+  uses-material-design: true
+   
+  assets:
+    - assets/cryptocurrency.png
+    - assets/bitcoin.png
+    - assets/ethereum.png
+    - assets/ripple.png
+    - assets/litecoin.png
+    - assets/tether.png
+    - assets/stellar.png
+    - assets/neo.png
+    - assets/eos.png
+    - assets/dash.png
+    - assets/chainlink.png
+    - assets/cosmos.png
+    - assets/tezos.png
+    - assets/tron.png
+    - assets/cardano.png
+    - assets/polkadot.png
+    - assets/usdcoin.png
+    - assets/uniswap.png
+    - assets/ankr.png
+    - assets/maker.png
