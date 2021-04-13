@@ -1,4 +1,5 @@
 import 'package:crypto_currency_app/src/constants/colors.dart';
+import 'package:crypto_currency_app/src/screens/currency_detail_screen.dart';
 import 'package:crypto_currency_app/src/utils/format_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +18,11 @@ class CurrencyList extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (BuildContext context) =>
+                    CurrencyDetailScreen(index, snapshot.data)));
+          },
           minVerticalPadding: 16.0,
           leading: CircleAvatar(
               radius: 36.0,
