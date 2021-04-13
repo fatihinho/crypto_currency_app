@@ -13,9 +13,9 @@ class CurrenciesScreen extends StatefulWidget {
 
 class _CurrenciesScreenState extends State<CurrenciesScreen> {
   var _searchTyped = false;
-  var _appBarSearch = TextField();
-  var _searchIcon = Icon(Icons.search);
-  var _filterIcon = Icon(Icons.sort);
+  var _appBarSearch = const TextField();
+  var _searchIcon = const Icon(Icons.search);
+  var _filterIcon = const Icon(Icons.sort);
   var _filterName = FilterNames.NAME_ASC;
 
   final _searchController = TextEditingController();
@@ -135,12 +135,12 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     if (_searchController.text.isEmpty) {
-                      return CurrencyList(snapshot, index);
+                      return CurrencyList(index, snapshot.data);
                     } else if (FormatUtils.cryptoCodeToName(
                             snapshot.data[index]['numeratorSymbol'])
                         .toLowerCase()
                         .contains(_searchController.text.toLowerCase())) {
-                      return CurrencyList(snapshot, index);
+                      return CurrencyList(index, snapshot.data);
                     } else {
                       return Container();
                     }

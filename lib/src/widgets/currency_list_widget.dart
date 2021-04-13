@@ -8,10 +8,30 @@ import 'helper_widgets.dart';
 
 class CurrencyList extends StatelessWidget {
   final int index;
-  final AsyncSnapshot snapshot;
-  CurrencyList(this.snapshot, this.index);
+  final List data;
+  CurrencyList(this.index, this.data);
 
   final formatter = NumberFormat('#,##0.00', 'tr_TR');
+
+  Route _navigateToCurrencyDetail() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          CurrencyDetailScreen(this.index, this.data),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,18 +39,15 @@ class CurrencyList extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (BuildContext context) =>
-                    CurrencyDetailScreen(index, snapshot.data)));
+            Navigator.of(context).push(_navigateToCurrencyDetail());
           },
           minVerticalPadding: 16.0,
           leading: CircleAvatar(
-              radius: 36.0,
-              child: CoinLogo(snapshot.data[index]['numeratorSymbol'])),
+              radius: 36.0, child: CoinLogo(data[index]['numeratorSymbol'])),
           title: Container(
             margin: EdgeInsets.only(bottom: 8.0),
             child: Text(
-              '${FormatUtils.cryptoCodeToName(snapshot.data[index]['numeratorSymbol'])}',
+              '${FormatUtils.cryptoCodeToName(data[index]['numeratorSymbol'])}',
               style:
                   TextStyle(color: Colors.white54, fontWeight: FontWeight.bold),
             ),
@@ -38,13 +55,13 @@ class CurrencyList extends StatelessWidget {
           subtitle: Row(
             children: [
               Text(
-                '${formatter.format(snapshot.data[index]['last'])} ₺',
+                '${formatter.format(data[index]['last'])} ₺',
                 style: TextStyle(fontSize: 24.0, color: Colors.white),
               ),
               Container(
                 margin: EdgeInsets.only(left: 16.0),
                 decoration: BoxDecoration(
-                    color: snapshot.data[index]['dailyPercent'] >= 0
+                    color: data[index]['dailyPercent'] >= 0
                         ? AppColors.dailyPercentPositive
                         : AppColors.dailyPercentNegative,
                     borderRadius: BorderRadius.horizontal(
@@ -53,7 +70,7 @@ class CurrencyList extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Text(
-                    '${snapshot.data[index]['dailyPercent']}%',
+                    '${data[index]['dailyPercent']}%',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),

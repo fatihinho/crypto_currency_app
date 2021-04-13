@@ -14,7 +14,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'The Crypto Currency',
+      title: 'Kripton',
       theme: ThemeData(fontFamily: GoogleFonts.roboto().fontFamily),
       home: CurrenciesScreen(),
     );
