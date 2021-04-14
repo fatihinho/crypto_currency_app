@@ -1,3 +1,4 @@
+import 'package:crypto_currency_app/src/screens/currencies_favorite_screen.dart';
 import 'package:crypto_currency_app/src/utils/format_utils.dart';
 import 'package:crypto_currency_app/src/utils/sort_utils.dart';
 import 'package:crypto_currency_app/src/widgets/currency_list_widget.dart';
@@ -12,6 +13,7 @@ class CurrenciesScreen extends StatefulWidget {
 }
 
 class _CurrenciesScreenState extends State<CurrenciesScreen> {
+  var _appBarTitle;
   var _searchTyped = false;
   var _appBarSearch = const TextField();
   var _searchIcon = const Icon(Icons.search);
@@ -19,9 +21,14 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
   var _filterName = FilterNames.NAME_ASC;
 
   final _searchController = TextEditingController();
-  final _appBarTitle = Text('Kripton',
-      style: TextStyle(
-          fontSize: 36.0, fontFamily: GoogleFonts.lobster().fontFamily));
+
+  @override
+  void initState() {
+    this._appBarTitle = Text('Kripton',
+        style: TextStyle(
+            fontSize: 36.0, fontFamily: GoogleFonts.lobster().fontFamily));
+    super.initState();
+  }
 
   Future<void> _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 500))
@@ -67,14 +74,40 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
     });
   }
 
+  Route _navigateToCurrenciesFavorite() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          CurrenciesFavoriteScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(-1.0, 0.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.currencyScreenBGColor,
       appBar: AppBar(
+        centerTitle: true,
         title: _searchTyped ? _appBarSearch : _appBarTitle,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
+        leading: GestureDetector(
+            child: Icon(Icons.favorite_border),
+            onTap: () {
+              Navigator.of(context).push(_navigateToCurrenciesFavorite());
+            }),
         actions: [
           Padding(
               padding: const EdgeInsets.all(8.0),
