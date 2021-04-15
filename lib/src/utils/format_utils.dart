@@ -39,6 +39,10 @@ class FormatUtils {
         return 'Ankr ($code)';
       case 'MKR':
         return 'Maker ($code)';
+      case 'OMG':
+        return 'OMG Network ($code)';
+      case 'ENJ':
+        return 'Enjin Coin ($code)';
     }
     return '';
   }

@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
+import 'package:crypto_currency_app/src/services/firestore_database.dart';
 import 'package:crypto_currency_app/src/utils/format_utils.dart';
-import 'package:crypto_currency_app/src/widgets/currency_detail.widget.dart';
+import 'package:crypto_currency_app/src/widgets/currency_detail_widget.dart';
 import 'package:crypto_currency_app/src/widgets/helper_widgets.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
 class CurrencyDetailScreen extends StatefulWidget {
@@ -14,16 +17,33 @@ class CurrencyDetailScreen extends StatefulWidget {
 }
 
 class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
+  final _firestore = FirebaseFirestore.instance.collection('favorites');
+
   var _isFavorited = false;
+
+  void initFavorited() async {
+    var fav = await _firestore.get().then((value) => value.docs).then((value) =>
+        value.any((element) =>
+            widget.data[widget.index]['numeratorSymbol'] ==
+            element['numeratorSymbol']));
+    if (fav) {
+      setState(() {
+        _isFavorited = true;
+      });
+    }
+  }
 
   @override
   void initState() {
-    if (_isFavorited) {}
+    initFavorited();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var firestore = Provider.of<FirestoreDatabase>(context);
+    var code = widget.data[widget.index]['numeratorSymbol'];
+
     return Scaffold(
         backgroundColor: AppColors.currencyDetailScreenBGColor,
         appBar: AppBar(
@@ -50,10 +70,14 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
                   child: Icon(
                       _isFavorited ? Icons.favorite : Icons.favorite_border,
                       color: _isFavorited ? Colors.red : Colors.white),
-                  onTap: () {
-                    setState(() {
+                  onTap: () async {
+                    if (!this._isFavorited) {
+                      await firestore.addFavoriteCurrency(code);
                       this._isFavorited = !this._isFavorited;
-                    });
+                    } else {
+                      await firestore.removeFavoriteCurrency(code);
+                      this._isFavorited = !this._isFavorited;
+                    }
                   }),
             )
           ],

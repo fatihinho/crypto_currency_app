@@ -63,6 +63,12 @@ class CoinLogo extends StatelessWidget {
 
       case 'MKR':
         return Image.asset('assets/maker.png');
+
+      case 'ENJ':
+        return Image.asset('assets/enjin.png');
+
+      case 'OMG':
+        return Image.asset('assets/omgnetwork.png');
     }
     return Container();
   }

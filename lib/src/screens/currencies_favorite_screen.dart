@@ -1,9 +1,34 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/services/currencies_data_service.dart';
-import 'package:crypto_currency_app/src/widgets/currency_list_widget.dart';
+import 'package:crypto_currency_app/src/widgets/currency_favorite_widget.dart';
 import 'package:flutter/material.dart';
 
-class CurrenciesFavoriteScreen extends StatelessWidget {
+class CurrenciesFavoriteScreen extends StatefulWidget {
+  @override
+  _CurrenciesFavoriteScreenState createState() =>
+      _CurrenciesFavoriteScreenState();
+}
+
+class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
+  final _firestore = FirebaseFirestore.instance.collection('favorites');
+  List<QueryDocumentSnapshot> _favorites = [];
+
+  Future<void> _onRefresh() async {
+    await Future.delayed(Duration(milliseconds: 500))
+        .then((value) => {super.setState(() {})});
+  }
+
+  void _initFavoriteCurrencies() async {
+    _favorites = await _firestore.get().then((value) => value.docs);
+  }
+
+  @override
+  void initState() {
+    _initFavoriteCurrencies();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,11 +53,33 @@ class CurrenciesFavoriteScreen extends StatelessWidget {
             } else if (snapshot.hasError) {
               return Center(child: Icon(Icons.error_outline));
             } else {
-              return ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return CurrencyList(index, snapshot.data);
-                  });
+              if (_favorites.length > 0) {
+                return RefreshIndicator(
+                  onRefresh: () => _onRefresh(),
+                  child: ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (_favorites.isNotEmpty) {
+                        if (_favorites.any((element) =>
+                            element['numeratorSymbol'] ==
+                            snapshot.data[index]['numeratorSymbol'])) {
+                          return CurrencyFavoriteList(index, snapshot.data);
+                        }
+                      }
+                      return Container();
+                    },
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
+                  ),
+                );
+              } else {
+                return Center(
+                    child: Icon(
+                  Icons.favorite_border,
+                  color: Colors.white10,
+                  size: 128.0,
+                ));
+              }
             }
           }),
     );

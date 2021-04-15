@@ -11,7 +11,9 @@ dependencies:
     sdk: flutter
   firebase_core: ^1.0.2
   firebase_auth: ^1.0.1
+  cloud_firestore: ^1.0.5
   google_fonts: ^2.0.0
+  provider: ^5.0.0
   flutter_launcher_icons: ^0.9.0
 
 dev_dependencies:
@@ -47,3 +49,5 @@ flutter:
     - assets/uniswap.png
     - assets/ankr.png
     - assets/maker.png
+    - assets/omgnetwork.png
+    - assets/enjin.png
