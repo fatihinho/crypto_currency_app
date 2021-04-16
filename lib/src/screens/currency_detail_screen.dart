@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
-import 'package:crypto_currency_app/src/services/firestore_database.dart';
-import 'package:crypto_currency_app/src/utils/format_utils.dart';
+import 'package:crypto_currency_app/src/services/auth_service.dart';
+import 'package:crypto_currency_app/src/services/firestore_service.dart';
+import 'package:crypto_currency_app/src/utils/format_util.dart';
 import 'package:crypto_currency_app/src/widgets/currency_detail_widget.dart';
-import 'package:crypto_currency_app/src/widgets/helper_widgets.dart';
+import 'package:crypto_currency_app/src/widgets/helper_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -17,12 +18,15 @@ class CurrencyDetailScreen extends StatefulWidget {
 }
 
 class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
-  final _firestore = FirebaseFirestore.instance.collection('favorites');
+  final _db = FirebaseFirestore.instance
+      .collection('userData')
+      .doc(getUID())
+      .collection('favorites');
 
   var _isFavorited = false;
 
   void initFavorited() async {
-    var fav = await _firestore.get().then((value) => value.docs).then((value) =>
+    var fav = await _db.get().then((value) => value.docs).then((value) =>
         value.any((element) =>
             widget.data[widget.index]['numeratorSymbol'] ==
             element['numeratorSymbol']));
@@ -74,9 +78,21 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
                     if (!this._isFavorited) {
                       await firestore.addFavoriteCurrency(code);
                       this._isFavorited = !this._isFavorited;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.green,
+                          content: const Text('Favorilere eklendi'),
+                        ),
+                      );
                     } else {
                       await firestore.removeFavoriteCurrency(code);
                       this._isFavorited = !this._isFavorited;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          backgroundColor: Colors.red,
+                          content: const Text('Favorilerden kaldırıldı'),
+                        ),
+                      );
                     }
                   }),
             )

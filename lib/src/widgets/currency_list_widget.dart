@@ -1,10 +1,10 @@
 import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/screens/currency_detail_screen.dart';
-import 'package:crypto_currency_app/src/utils/format_utils.dart';
+import 'package:crypto_currency_app/src/utils/format_util.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'helper_widgets.dart';
+import 'helper_widget.dart';
 
 class CurrencyList extends StatelessWidget {
   final int index;
@@ -62,8 +62,8 @@ class CurrencyList extends StatelessWidget {
                 margin: EdgeInsets.only(left: 16.0),
                 decoration: BoxDecoration(
                     color: data[index]['dailyPercent'] >= 0
-                        ? AppColors.dailyPercentPositive
-                        : AppColors.dailyPercentNegative,
+                        ? AppColors.dailyPositiveColor
+                        : AppColors.dailyNegativeColor,
                     borderRadius: BorderRadius.horizontal(
                         left: Radius.circular(8.0),
                         right: Radius.circular(8.0))),

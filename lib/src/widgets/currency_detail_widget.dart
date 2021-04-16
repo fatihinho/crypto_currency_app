@@ -47,11 +47,11 @@ class _CryptoDetailsState extends State<CryptoDetails> {
                 _isIncrease
                     ? Icon(
                         Icons.arrow_drop_up,
-                        color: AppColors.dailyPercentPositive,
+                        color: AppColors.dailyPositiveColor,
                       )
                     : Icon(
                         Icons.arrow_drop_down,
-                        color: AppColors.dailyPercentNegative,
+                        color: AppColors.dailyNegativeColor,
                       )
               ],
             ),
@@ -92,8 +92,8 @@ class _CryptoDetailsState extends State<CryptoDetails> {
                     style: TextStyle(
                         fontSize: 20.0,
                         color: _isIncrease
-                            ? AppColors.dailyPercentPositive
-                            : AppColors.dailyPercentNegative)),
+                            ? AppColors.dailyPositiveColor
+                            : AppColors.dailyNegativeColor)),
               ],
             ),
           ),

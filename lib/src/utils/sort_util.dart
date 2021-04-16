@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'format_utils.dart';
+import 'format_util.dart';
 
 enum FilterNames {
   NAME_ASC,

@@ -1,5 +1,7 @@
 import 'package:crypto_currency_app/src/screens/currencies_screen.dart';
-import 'package:crypto_currency_app/src/services/firestore_database.dart';
+import 'package:crypto_currency_app/src/screens/home_screen.dart';
+import 'package:crypto_currency_app/src/services/auth_service.dart';
+import 'package:crypto_currency_app/src/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,7 +28,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Kripton',
       theme: ThemeData(fontFamily: GoogleFonts.roboto().fontFamily),
-      home: CurrenciesScreen(),
+      home: hasCurrentUser() ? CurrenciesScreen() : HomeScreen(),
     );
   }
 }

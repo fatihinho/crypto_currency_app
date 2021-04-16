@@ -1,71 +1,93 @@
 import 'package:crypto_currency_app/src/screens/currencies_screen.dart';
+import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final heightScreen = size.height;
+    final widthScreen = size.width;
     return Scaffold(
       backgroundColor: AppColors.homeScreenBGColor,
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                  width: 240,
-                  height: 240,
-                  margin: EdgeInsets.only(top: heightScreen * 0.15),
-                  child: Image.asset('assets/cryptocurrency.png')),
-              SizedBox(height: 92.0),
-              Text(
-                'Ücretsiz hesap oluştur',
-                style: TextStyle(color: Colors.white, fontSize: 18.0),
+              Column(
+                children: [
+                  Container(
+                      child: Text('Kripton',
+                          style: TextStyle(
+                              fontSize: 48.0,
+                              color: AppColors.logoColor,
+                              fontFamily: GoogleFonts.lobster().fontFamily))),
+                  SizedBox(height: 16.0),
+                  Container(
+                      width: 240,
+                      height: 240,
+                      child: Image.asset('assets/cryptocurrency.png')),
+                ],
               ),
-              SizedBox(height: 40.0),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints.tightFor(width: 180.0, height: 40.0),
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Hesap Oluştur',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+              Column(
+                children: [
+                  Text("Borsadan Anında Haberdar Ol",
+                      style: TextStyle(
+                        color: AppColors.homeTextColor1,
+                        fontFamily: GoogleFonts.jura().fontFamily,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  SizedBox(height: 4.0),
+                  Text("Kripto'nun Gücünü Keşfetmeye",
+                      style: TextStyle(
+                        color: AppColors.homeTextColor2,
+                        fontFamily: GoogleFonts.jura().fontFamily,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      )),
+                  SizedBox(height: 4.0),
+                  Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.tightFor(
+                          width: widthScreen * 0.7, height: 40.0),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          signInAnonymous().then((value) => {
+                                if (value)
+                                  {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (BuildContext context) =>
+                                                CurrenciesScreen()))
+                                  }
+                              });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'BAŞLA',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Icon(Icons.play_arrow),
+                          ],
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: AppColors.startButtonColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            )),
+                      ),
                     ),
-                    style: ElevatedButton.styleFrom(
-                        primary: AppColors.registerButtonColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
-                        )),
                   ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: ConstrainedBox(
-                  constraints:
-                      BoxConstraints.tightFor(width: 180.0, height: 40.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              CurrenciesScreen()));
-                    },
-                    child: Text(
-                      'Giriş Yap',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        primary: AppColors.loginButtonColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
-                        )),
-                  ),
-                ),
+                ],
               ),
             ],
           ),

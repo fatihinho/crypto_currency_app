@@ -1,10 +1,11 @@
 import 'package:crypto_currency_app/src/screens/currencies_favorite_screen.dart';
-import 'package:crypto_currency_app/src/utils/format_utils.dart';
-import 'package:crypto_currency_app/src/utils/sort_utils.dart';
+import 'package:crypto_currency_app/src/utils/format_util.dart';
+import 'package:crypto_currency_app/src/utils/sort_util.dart';
 import 'package:crypto_currency_app/src/widgets/currency_list_widget.dart';
+import 'package:crypto_currency_app/src/widgets/helper_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
-import 'package:crypto_currency_app/src/services/currencies_data_service.dart';
+import 'package:crypto_currency_app/src/services/currency_api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CurrenciesScreen extends StatefulWidget {
@@ -26,7 +27,9 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
   void initState() {
     this._appBarTitle = Text('Kripton',
         style: TextStyle(
-            fontSize: 36.0, fontFamily: GoogleFonts.lobster().fontFamily));
+            color: Colors.yellow,
+            fontSize: 36.0,
+            fontFamily: GoogleFonts.lobster().fontFamily));
     super.initState();
   }
 
@@ -167,12 +170,16 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
                 child: ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
-                    if (_searchController.text.isEmpty) {
+                    if (_searchController.text.isEmpty &&
+                        CoinLogo(snapshot.data[index]['numeratorSymbol']) !=
+                            Container()) {
                       return CurrencyList(index, snapshot.data);
                     } else if (FormatUtils.cryptoCodeToName(
-                            snapshot.data[index]['numeratorSymbol'])
-                        .toLowerCase()
-                        .contains(_searchController.text.toLowerCase())) {
+                                snapshot.data[index]['numeratorSymbol'])
+                            .toLowerCase()
+                            .contains(_searchController.text.toLowerCase()) &&
+                        CoinLogo(snapshot.data[index]['numeratorSymbol']) !=
+                            Container()) {
                       return CurrencyList(index, snapshot.data);
                     } else {
                       return Container();

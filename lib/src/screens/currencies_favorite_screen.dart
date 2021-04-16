@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
-import 'package:crypto_currency_app/src/services/currencies_data_service.dart';
+import 'package:crypto_currency_app/src/services/auth_service.dart';
+import 'package:crypto_currency_app/src/services/currency_api_service.dart';
 import 'package:crypto_currency_app/src/widgets/currency_favorite_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -11,13 +12,17 @@ class CurrenciesFavoriteScreen extends StatefulWidget {
 }
 
 class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
-  final _firestore = FirebaseFirestore.instance.collection('favorites');
-  List<QueryDocumentSnapshot> _favorites = [];
-
   Future<void> _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 500))
         .then((value) => {super.setState(() {})});
   }
+
+  final _firestore = FirebaseFirestore.instance
+      .collection('userData')
+      .doc(getUID())
+      .collection('favorites');
+
+  List<QueryDocumentSnapshot> _favorites = [];
 
   void _initFavoriteCurrencies() async {
     _favorites = await _firestore.get().then((value) => value.docs);

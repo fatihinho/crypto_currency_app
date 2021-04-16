@@ -1,10 +1,10 @@
 import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/screens/currency_detail_screen.dart';
-import 'package:crypto_currency_app/src/utils/format_utils.dart';
+import 'package:crypto_currency_app/src/utils/format_util.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'helper_widgets.dart';
+import 'helper_widget.dart';
 
 class CurrencyFavoriteList extends StatelessWidget {
   final int index;
@@ -39,7 +39,7 @@ class CurrencyFavoriteList extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: ListTile(
           onTap: () {
-            Navigator.of(context).push(_navigateToCurrencyDetail());
+            Navigator.of(context).pushReplacement(_navigateToCurrencyDetail());
           },
           minVerticalPadding: 16.0,
           leading: CircleAvatar(
@@ -62,8 +62,8 @@ class CurrencyFavoriteList extends StatelessWidget {
                 margin: EdgeInsets.only(left: 16.0),
                 decoration: BoxDecoration(
                     color: data[index]['dailyPercent'] >= 0
-                        ? AppColors.dailyPercentPositive
-                        : AppColors.dailyPercentNegative,
+                        ? AppColors.dailyPositiveColor
+                        : AppColors.dailyNegativeColor,
                     borderRadius: BorderRadius.horizontal(
                         left: Radius.circular(8.0),
                         right: Radius.circular(8.0))),
