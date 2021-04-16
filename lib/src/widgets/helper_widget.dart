@@ -4,71 +4,73 @@ class CoinLogo extends StatelessWidget {
   final String code;
   CoinLogo(this.code);
 
+  final logoUrl = 'https://s2.coinmarketcap.com/static/img/coins/64x64/';
+
   @override
   Widget build(BuildContext context) {
     switch (code) {
       case 'BTC':
-        return Image.asset('assets/bitcoin.png');
+        return Image.network(logoUrl + '1.png');
 
       case 'ETH':
-        return Image.asset('assets/ethereum.png');
+        return Image.network(logoUrl + '1027.png');
 
       case 'XRP':
-        return Image.asset('assets/ripple.png');
+        return Image.network(logoUrl + '52.png');
 
       case 'LTC':
-        return Image.asset('assets/litecoin.png');
+        return Image.network(logoUrl + '2.png');
 
       case 'USDT':
-        return Image.asset('assets/tether.png');
+        return Image.network(logoUrl + '825.png');
 
       case 'XLM':
-        return Image.asset('assets/stellar.png');
+        return Image.network(logoUrl + '512.png');
 
       case 'NEO':
-        return Image.asset('assets/neo.png');
+        return Image.network(logoUrl + '1376.png');
 
       case 'EOS':
-        return Image.asset('assets/eos.png');
+        return Image.network(logoUrl + '1765.png');
 
       case 'DASH':
-        return Image.asset('assets/dash.png');
+        return Image.network(logoUrl + '131.png');
 
       case 'LINK':
-        return Image.asset('assets/chainlink.png');
+        return Image.network(logoUrl + '1975.png');
 
       case 'ATOM':
-        return Image.asset('assets/cosmos.png');
+        return Image.network(logoUrl + '3794.png');
 
       case 'XTZ':
-        return Image.asset('assets/tezos.png');
+        return Image.network(logoUrl + '2011.png');
 
       case 'TRX':
-        return Image.asset('assets/tron.png');
+        return Image.network(logoUrl + '1958.png');
 
       case 'ADA':
-        return Image.asset('assets/cardano.png');
+        return Image.network(logoUrl + '2010.png');
 
       case 'DOT':
-        return Image.asset('assets/polkadot.png');
+        return Image.network(logoUrl + '6636.png');
 
       case 'USDC':
-        return Image.asset('assets/usdcoin.png');
+        return Image.network(logoUrl + '3408.png');
 
       case 'UNI':
-        return Image.asset('assets/uniswap.png');
+        return Image.network(logoUrl + '7083.png');
 
       case 'ANKR':
-        return Image.asset('assets/ankr.png');
+        return Image.network(logoUrl + '3783.png');
 
       case 'MKR':
-        return Image.asset('assets/maker.png');
+        return Image.network(logoUrl + '1518.png');
 
       case 'ENJ':
-        return Image.asset('assets/enjin.png');
+        return Image.network(logoUrl + '2130.png');
 
       case 'OMG':
-        return Image.asset('assets/omgnetwork.png');
+        return Image.network(logoUrl + '1808.png');
     }
     return Container();
   }

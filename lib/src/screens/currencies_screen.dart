@@ -25,12 +25,12 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
 
   @override
   void initState() {
+    super.initState();
     this._appBarTitle = Text('Kripton',
         style: TextStyle(
             color: Colors.yellow,
             fontSize: 36.0,
             fontFamily: GoogleFonts.lobster().fontFamily));
-    super.initState();
   }
 
   Future<void> _onRefresh() async {

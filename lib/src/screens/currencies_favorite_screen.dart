@@ -30,8 +30,8 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
 
   @override
   void initState() {
-    _initFavoriteCurrencies();
     super.initState();
+    _initFavoriteCurrencies();
   }
 
   @override

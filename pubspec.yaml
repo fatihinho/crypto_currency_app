@@ -30,24 +30,3 @@ flutter:
    
   assets:
     - assets/cryptocurrency.png
-    - assets/bitcoin.png
-    - assets/ethereum.png
-    - assets/ripple.png
-    - assets/litecoin.png
-    - assets/tether.png
-    - assets/stellar.png
-    - assets/neo.png
-    - assets/eos.png
-    - assets/dash.png
-    - assets/chainlink.png
-    - assets/cosmos.png
-    - assets/tezos.png
-    - assets/tron.png
-    - assets/cardano.png
-    - assets/polkadot.png
-    - assets/usdcoin.png
-    - assets/uniswap.png
-    - assets/ankr.png
-    - assets/maker.png
-    - assets/omgnetwork.png
-    - assets/enjin.png

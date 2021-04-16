@@ -4,7 +4,6 @@ import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:crypto_currency_app/src/services/firestore_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -27,7 +26,6 @@ class App extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Kripton',
-      theme: ThemeData(fontFamily: GoogleFonts.roboto().fontFamily),
       home: hasCurrentUser() ? CurrenciesScreen() : HomeScreen(),
     );
   }
