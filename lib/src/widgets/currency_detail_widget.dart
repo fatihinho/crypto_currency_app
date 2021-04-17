@@ -25,10 +25,10 @@ class _CryptoDetailsState extends State<CryptoDetails> {
 
   @override
   void initState() {
+    super.initState();
     if (widget.data[widget.index]['daily'] < 0) {
       _isIncrease = false;
     }
-    super.initState();
   }
 
   @override

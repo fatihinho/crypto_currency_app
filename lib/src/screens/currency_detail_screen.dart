@@ -18,7 +18,7 @@ class CurrencyDetailScreen extends StatefulWidget {
 }
 
 class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
-  final _db = FirebaseFirestore.instance
+  final _firestore = FirebaseFirestore.instance
       .collection('userData')
       .doc(getUID())
       .collection('favorites');
@@ -26,7 +26,7 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
   var _isFavorited = false;
 
   void initFavorited() async {
-    var fav = await _db.get().then((value) => value.docs).then((value) =>
+    var fav = await _firestore.get().then((value) => value.docs).then((value) =>
         value.any((element) =>
             widget.data[widget.index]['numeratorSymbol'] ==
             element['numeratorSymbol']));
@@ -39,8 +39,8 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
 
   @override
   void initState() {
-    initFavorited();
     super.initState();
+    initFavorited();
   }
 
   @override
