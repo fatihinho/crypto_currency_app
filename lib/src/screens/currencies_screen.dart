@@ -23,16 +23,6 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
 
   final _searchController = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    this._appBarTitle = Text('Kripton',
-        style: TextStyle(
-            color: Colors.yellow,
-            fontSize: 36.0,
-            fontFamily: GoogleFonts.lobster().fontFamily));
-  }
-
   Future<void> _onRefresh() async {
     await Future.delayed(Duration(milliseconds: 500))
         .then((value) => {super.setState(() {})});
@@ -95,6 +85,16 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    this._appBarTitle = Text('Kripton',
+        style: TextStyle(
+            color: Colors.yellow,
+            fontSize: 36.0,
+            fontFamily: GoogleFonts.lobster().fontFamily));
   }
 
   @override

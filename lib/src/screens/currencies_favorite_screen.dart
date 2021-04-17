@@ -25,7 +25,7 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
   List<QueryDocumentSnapshot> _favorites = [];
 
   void _initFavoriteCurrencies() async {
-    _favorites = await _firestore.get().then((value) => value.docs);
+    await _firestore.get().then((value) => _favorites = value.docs);
   }
 
   @override
