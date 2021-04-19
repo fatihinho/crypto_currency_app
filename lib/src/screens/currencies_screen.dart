@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crypto_currency_app/src/screens/currencies_favorite_screen.dart';
 import 'package:crypto_currency_app/src/utils/format_util.dart';
 import 'package:crypto_currency_app/src/utils/sort_util.dart';
@@ -14,12 +16,16 @@ class CurrenciesScreen extends StatefulWidget {
 }
 
 class _CurrenciesScreenState extends State<CurrenciesScreen> {
-  var _appBarTitle;
   var _searchTyped = false;
   var _appBarSearch = const TextField();
   var _searchIcon = const Icon(Icons.search);
   var _filterIcon = const Icon(Icons.sort);
   var _filterName = FilterNames.NAME_ASC;
+  var _appBarTitle = Text('Kripton',
+      style: TextStyle(
+          color: Colors.yellow,
+          fontSize: 36.0,
+          fontFamily: GoogleFonts.lobster().fontFamily));
 
   final _searchController = TextEditingController();
 
@@ -87,14 +93,25 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
     );
   }
 
+  late Timer _timer;
+  late Future<List> futureCurrencies;
+
   @override
   void initState() {
     super.initState();
-    this._appBarTitle = Text('Kripton',
-        style: TextStyle(
-            color: Colors.yellow,
-            fontSize: 36.0,
-            fontFamily: GoogleFonts.lobster().fontFamily));
+    futureCurrencies = fetchCurrencies();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      _timer = timer;
+      setState(() {
+        futureCurrencies = fetchCurrencies();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
   }
 
   @override
@@ -145,7 +162,7 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
         ],
       ),
       body: FutureBuilder(
-          future: getCurrenciesData(),
+          future: futureCurrencies,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (this._filterName == FilterNames.NAME_ASC) {
               SortUtils.orderByNameAsc(snapshot);

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/services/auth_service.dart';
@@ -25,13 +27,31 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
   List<QueryDocumentSnapshot> _favorites = [];
 
   void _initFavoriteCurrencies() async {
-    await _firestore.get().then((value) => _favorites = value.docs);
+    setState(() async {
+      await _firestore.get().then((value) => _favorites = value.docs);
+    });
   }
+
+  late Timer _timer;
+  late Future<List> _futureCurrencies;
 
   @override
   void initState() {
     super.initState();
     _initFavoriteCurrencies();
+    _futureCurrencies = fetchCurrencies();
+    Timer.periodic(Duration(seconds: 1), (timer) {
+      _timer = timer;
+      setState(() {
+        _futureCurrencies = fetchCurrencies();
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _timer.cancel();
   }
 
   @override
@@ -51,7 +71,7 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
             ],
           )),
       body: FutureBuilder(
-          future: getCurrenciesData(),
+          future: _futureCurrencies,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
