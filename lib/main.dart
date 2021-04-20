@@ -1,5 +1,6 @@
 import 'package:crypto_currency_app/src/screens/currencies_screen.dart';
 import 'package:crypto_currency_app/src/screens/home_screen.dart';
+import 'package:crypto_currency_app/src/services/admob_service.dart';
 import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:crypto_currency_app/src/services/firestore_service.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await AdManager.initialize();
 
   runApp(
     MultiProvider(

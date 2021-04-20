@@ -3,6 +3,7 @@ import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:crypto_currency_app/src/services/firestore_service.dart';
 import 'package:crypto_currency_app/src/utils/format_util.dart';
+import 'package:crypto_currency_app/src/widgets/admob_banner_widget.dart';
 import 'package:crypto_currency_app/src/widgets/currency_detail_widget.dart';
 import 'package:crypto_currency_app/src/widgets/helper_widget.dart';
 import 'package:provider/provider.dart';
@@ -49,57 +50,59 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
     var code = widget.data[widget.index]['numeratorSymbol'];
 
     return Scaffold(
-        backgroundColor: AppColors.currencyDetailScreenBGColor,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0.0,
-          title: Row(
-            children: [
-              SizedBox(
-                child: CoinLogo(widget.data[widget.index]['numeratorSymbol']),
-                height: 36.0,
-                width: 36.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                    '${FormatUtils.cryptoCodeToName(widget.data[widget.index]['numeratorSymbol'])}'),
-              ),
-            ],
-          ),
-          actions: [
+      backgroundColor: AppColors.currencyDetailScreenBGColor,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: Row(
+          children: [
+            SizedBox(
+              child: CoinLogo(widget.data[widget.index]['numeratorSymbol']),
+              height: 36.0,
+              width: 36.0,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: GestureDetector(
-                  child: Icon(
-                      _isFavorited ? Icons.favorite : Icons.favorite_border,
-                      color: _isFavorited ? Colors.red : Colors.white),
-                  onTap: () async {
-                    if (!this._isFavorited) {
-                      await firestore.addFavoriteCurrency(code);
-                      this._isFavorited = !this._isFavorited;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Colors.green,
-                          content: const Text('Favorilere eklendi'),
-                        ),
-                      );
-                    } else {
-                      await firestore.removeFavoriteCurrency(code);
-                      this._isFavorited = !this._isFavorited;
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          backgroundColor: Colors.red,
-                          content: const Text('Favorilerden kaldırıldı'),
-                        ),
-                      );
-                    }
-                  }),
-            )
+              child: Text(
+                  '${FormatUtils.cryptoCodeToName(widget.data[widget.index]['numeratorSymbol'])}'),
+            ),
           ],
         ),
-        body: Padding(
+        actions: [
+          Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CryptoDetails(this.widget.index, this.widget.data)));
+            child: GestureDetector(
+                child: Icon(
+                    _isFavorited ? Icons.favorite : Icons.favorite_border,
+                    color: _isFavorited ? Colors.red : Colors.white),
+                onTap: () async {
+                  if (!this._isFavorited) {
+                    await firestore.addFavoriteCurrency(code);
+                    this._isFavorited = !this._isFavorited;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.green,
+                        content: const Text('Favorilere eklendi'),
+                      ),
+                    );
+                  } else {
+                    await firestore.removeFavoriteCurrency(code);
+                    this._isFavorited = !this._isFavorited;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor: Colors.red,
+                        content: const Text('Favorilerden kaldırıldı'),
+                      ),
+                    );
+                  }
+                }),
+          )
+        ],
+      ),
+      body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CryptoDetails(this.widget.index, this.widget.data)),
+      bottomNavigationBar: AdMobBanner(),
+    );
   }
 }

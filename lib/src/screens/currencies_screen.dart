@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_currency_app/src/screens/currencies_favorite_screen.dart';
+import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:crypto_currency_app/src/utils/format_util.dart';
 import 'package:crypto_currency_app/src/utils/sort_util.dart';
+import 'package:crypto_currency_app/src/widgets/admob_banner_widget.dart';
 import 'package:crypto_currency_app/src/widgets/currency_list_widget.dart';
 import 'package:crypto_currency_app/src/widgets/helper_widget.dart';
 import 'package:flutter/material.dart';
@@ -93,6 +96,17 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
     );
   }
 
+  final _firestore = FirebaseFirestore.instance
+      .collection('userData')
+      .doc(getUID())
+      .collection('favorites');
+
+  void _initFavoriteCurrencies() async {
+    setState(() async {
+      await _firestore.get().then((value) => value.docs);
+    });
+  }
+
   late Timer _timer;
   late Future<List> futureCurrencies;
 
@@ -106,6 +120,7 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
         futureCurrencies = fetchCurrencies();
       });
     });
+    _initFavoriteCurrencies();
   }
 
   @override
@@ -208,6 +223,7 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
               );
             }
           }),
+      bottomNavigationBar: AdMobBanner(),
     );
   }
 }
