@@ -22,8 +22,6 @@ class _AdMobBannerState extends State<AdMobBanner> {
         setState(() {
           _isLoaded = true;
         });
-      }, onAdFailedToLoad: (_, error) {
-        print('Ad failed to load with error: $error');
       }),
     )..load();
   }
