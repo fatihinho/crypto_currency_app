@@ -3,10 +3,19 @@ import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:flutter/foundation.dart';
 
 class FirestoreDatabase extends ChangeNotifier {
+  List<QueryDocumentSnapshot> _favorites = [];
+
+  List<QueryDocumentSnapshot> get favorites => _favorites;
+
   CollectionReference _firestore = FirebaseFirestore.instance
       .collection('userData')
       .doc(getUID())
       .collection('favorites');
+
+  Future<void> initFavoriteCurrencies() async {
+    await _firestore.get().then((value) => _favorites = value.docs);
+    notifyListeners();
+  }
 
   Future<void> addFavoriteCurrency(String code) async {
     _firestore

@@ -3,7 +3,6 @@ import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:crypto_currency_app/src/services/firestore_service.dart';
 import 'package:crypto_currency_app/src/utils/format_util.dart';
-import 'package:crypto_currency_app/src/widgets/admob_banner_widget.dart';
 import 'package:crypto_currency_app/src/widgets/currency_detail_widget.dart';
 import 'package:crypto_currency_app/src/widgets/helper_widget.dart';
 import 'package:provider/provider.dart';
@@ -55,17 +54,21 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: Row(
-          children: [
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
             SizedBox(
               child: CoinLogo(widget.data[widget.index]['numeratorSymbol']),
               height: 36.0,
               width: 36.0,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                  '${FormatUtils.cryptoCodeToName(widget.data[widget.index]['numeratorSymbol'])}'),
-            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                    '${FormatUtils.cryptoCodeToName(widget.data[widget.index]['numeratorSymbol'])}'),
+              ),
+            )
           ],
         ),
         actions: [
@@ -102,7 +105,6 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
       body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: CryptoDetails(this.widget.index, this.widget.data)),
-      bottomNavigationBar: AdMobBanner(),
     );
   }
 }

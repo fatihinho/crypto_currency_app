@@ -1,14 +1,11 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
-import 'package:crypto_currency_app/src/services/admob_service.dart';
-import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:crypto_currency_app/src/services/currency_api_service.dart';
-import 'package:crypto_currency_app/src/widgets/admob_banner_widget.dart';
+import 'package:crypto_currency_app/src/services/firestore_service.dart';
 import 'package:crypto_currency_app/src/widgets/currency_favorite_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:provider/provider.dart';
 
 class CurrenciesFavoriteScreen extends StatefulWidget {
   @override
@@ -22,27 +19,12 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
         .then((value) => {super.setState(() {})});
   }
 
-  final _firestore = FirebaseFirestore.instance
-      .collection('userData')
-      .doc(getUID())
-      .collection('favorites');
-
-  List<QueryDocumentSnapshot> _favorites = [];
-
-  void _initFavoriteCurrencies() async {
-    setState(() async {
-      await _firestore.get().then((value) => _favorites = value.docs);
-    });
-  }
-
   late Timer _timer;
   late Future<List> _futureCurrencies;
-  late InterstitialAd _interstitialAd;
 
   @override
   void initState() {
     super.initState();
-    _initFavoriteCurrencies();
     _futureCurrencies = fetchCurrencies();
     Timer.periodic(Duration(seconds: 1), (timer) {
       _timer = timer;
@@ -50,7 +32,6 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
         _futureCurrencies = fetchCurrencies();
       });
     });
-    _interstitialAd = AdManager.interstitialAd;
   }
 
   @override
@@ -61,6 +42,7 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var _favorites = Provider.of<FirestoreDatabase>(context).favorites;
     return Scaffold(
       backgroundColor: AppColors.currencyDetailScreenBGColor,
       appBar: AppBar(
@@ -78,7 +60,6 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
       body: FutureBuilder(
           future: _futureCurrencies,
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            _interstitialAd.show();
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
@@ -113,7 +94,6 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
               }
             }
           }),
-      bottomNavigationBar: AdMobBanner(),
     );
   }
 }
