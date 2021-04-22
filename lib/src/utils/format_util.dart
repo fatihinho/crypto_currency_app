@@ -43,6 +43,12 @@ class FormatUtils {
         return 'OMG Network ($code)';
       case 'ENJ':
         return 'Enjin Coin ($code)';
+      case 'COMP':
+        return 'Compound ($code)';
+      case 'GRT':
+        return 'The Graph ($code)';
+      case 'MANA':
+        return 'Decentraland ($code)';
     }
     return '';
   }
