@@ -22,7 +22,7 @@ class HomeScreen extends StatelessWidget {
                   Container(
                       child: Text('Kripton',
                           style: TextStyle(
-                              fontSize: 48.0,
+                              fontSize: 52.0,
                               color: AppColors.logoColor,
                               fontFamily: GoogleFonts.lobster().fontFamily))),
                   SizedBox(height: 16.0),
@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
               ),
               Column(
                 children: [
-                  Text("Borsadan Anında Haberdar Ol",
+                  Text("BORSADAN ANINDA HABERDAR OL",
                       style: TextStyle(
                         color: AppColors.homeTextColor1,
                         fontFamily: GoogleFonts.jura().fontFamily,
@@ -42,19 +42,19 @@ class HomeScreen extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       )),
                   SizedBox(height: 4.0),
-                  Text("Kripto'nun Gücünü Keşfetmeye",
+                  Text("KRİPTON'UN GÜCÜNÜ KEŞFETMEYE",
                       style: TextStyle(
                         color: AppColors.homeTextColor2,
                         fontFamily: GoogleFonts.jura().fontFamily,
                         fontSize: 18.0,
                         fontWeight: FontWeight.bold,
                       )),
-                  SizedBox(height: 4.0),
+                  SizedBox(height: 32.0),
                   Padding(
                     padding: const EdgeInsets.all(4.0),
                     child: ConstrainedBox(
                       constraints: BoxConstraints.tightFor(
-                          width: widthScreen * 0.7, height: 40.0),
+                          width: widthScreen * 0.5, height: 40.0),
                       child: ElevatedButton(
                         onPressed: () {
                           signInAnonymous().then((value) => {
