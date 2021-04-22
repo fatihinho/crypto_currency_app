@@ -5,7 +5,6 @@ import 'package:crypto_currency_app/src/services/firestore_service.dart';
 import 'package:crypto_currency_app/src/utils/format_util.dart';
 import 'package:crypto_currency_app/src/utils/sort_util.dart';
 import 'package:crypto_currency_app/src/widgets/currency_list_widget.dart';
-import 'package:crypto_currency_app/src/widgets/helper_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/services/currency_api_service.dart';
@@ -191,15 +190,17 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
                     if (_searchController.text.isEmpty &&
-                        CoinLogo(snapshot.data[index]['numeratorSymbol']) !=
-                            Container()) {
+                        FormatUtils.cryptoCodeToName(
+                                snapshot.data[index]['numeratorSymbol'])
+                            .isNotEmpty) {
                       return CurrencyList(index, snapshot.data);
                     } else if (FormatUtils.cryptoCodeToName(
                                 snapshot.data[index]['numeratorSymbol'])
                             .toLowerCase()
                             .contains(_searchController.text.toLowerCase()) &&
-                        CoinLogo(snapshot.data[index]['numeratorSymbol']) !=
-                            Container()) {
+                        FormatUtils.cryptoCodeToName(
+                                snapshot.data[index]['numeratorSymbol'])
+                            .isNotEmpty) {
                       return CurrencyList(index, snapshot.data);
                     } else {
                       return Container();
