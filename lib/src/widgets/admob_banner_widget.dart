@@ -27,20 +27,16 @@ class _AdMobBannerState extends State<AdMobBanner> {
   }
 
   @override
-  void dispose() {
+  void dispose() async {
     super.dispose();
-    _banner.dispose();
+    await _banner.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     if (_isLoaded) {
-      return Container(
-        height: 50,
-        child: AdWidget(ad: _banner),
-      );
-    } else {
-      return SizedBox(height: 50);
+      return Container(child: AdWidget(ad: _banner), height: 50);
     }
+    return SizedBox(height: 50);
   }
 }
