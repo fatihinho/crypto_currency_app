@@ -3,6 +3,7 @@ import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/services/auth_service.dart';
 import 'package:crypto_currency_app/src/services/firestore_service.dart';
 import 'package:crypto_currency_app/src/utils/format_util.dart';
+import 'package:crypto_currency_app/src/widgets/admob_banner_widget.dart';
 import 'package:crypto_currency_app/src/widgets/currency_detail_widget.dart';
 import 'package:crypto_currency_app/src/widgets/helper_widget.dart';
 import 'package:provider/provider.dart';
@@ -102,9 +103,23 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
           )
         ],
       ),
-      body: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CryptoDetails(this.widget.index, this.widget.data)),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AdMobBanner(),
+          ),
+          Expanded(
+            child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CryptoDetails(this.widget.index, this.widget.data)),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AdMobBanner(),
+          ),
+        ],
+      ),
     );
   }
 }
