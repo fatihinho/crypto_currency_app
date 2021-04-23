@@ -14,11 +14,6 @@ class CurrenciesFavoriteScreen extends StatefulWidget {
 }
 
 class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
-  Future<void> _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 500))
-        .then((value) => {super.setState(() {})});
-  }
-
   late Timer _timer;
   late Future<List> _futureCurrencies;
 
@@ -66,23 +61,20 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
               return Center(child: Icon(Icons.error_outline));
             } else {
               if (_favorites.length > 0) {
-                return RefreshIndicator(
-                  onRefresh: () => _onRefresh(),
-                  child: ListView.builder(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      if (_favorites.isNotEmpty) {
-                        if (_favorites.any((element) =>
-                            element['numeratorSymbol'] ==
-                            snapshot.data[index]['numeratorSymbol'])) {
-                          return CurrencyFavoriteList(index, snapshot.data);
-                        }
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (_favorites.isNotEmpty) {
+                      if (_favorites.any((element) =>
+                          element['numeratorSymbol'] ==
+                          snapshot.data[index]['numeratorSymbol'])) {
+                        return CurrencyFavoriteList(index, snapshot.data);
                       }
-                      return Container();
-                    },
-                    physics: const BouncingScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
-                  ),
+                    }
+                    return Container();
+                  },
+                  physics: const BouncingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics()),
                 );
               } else {
                 return Center(

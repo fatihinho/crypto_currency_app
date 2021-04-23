@@ -30,11 +30,6 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
 
   final _searchController = TextEditingController();
 
-  Future<void> _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 500))
-        .then((value) => {super.setState(() {})});
-  }
-
   void _searchPressed() {
     setState(() {
       if (this._searchIcon.icon == Icons.search) {
@@ -184,31 +179,28 @@ class _CurrenciesScreenState extends State<CurrenciesScreen> {
             } else if (snapshot.hasError) {
               return Center(child: Icon(Icons.error_outline));
             } else {
-              return RefreshIndicator(
-                onRefresh: () => _onRefresh(),
-                child: ListView.builder(
-                  itemCount: snapshot.data.length,
-                  itemBuilder: (context, index) {
-                    if (_searchController.text.isEmpty &&
-                        FormatUtils.cryptoCodeToName(
-                                snapshot.data[index]['numeratorSymbol'])
-                            .isNotEmpty) {
-                      return CurrencyList(index, snapshot.data);
-                    } else if (FormatUtils.cryptoCodeToName(
-                                snapshot.data[index]['numeratorSymbol'])
-                            .toLowerCase()
-                            .contains(_searchController.text.toLowerCase()) &&
-                        FormatUtils.cryptoCodeToName(
-                                snapshot.data[index]['numeratorSymbol'])
-                            .isNotEmpty) {
-                      return CurrencyList(index, snapshot.data);
-                    } else {
-                      return Container();
-                    }
-                  },
-                  physics: const BouncingScrollPhysics(
-                      parent: AlwaysScrollableScrollPhysics()),
-                ),
+              return ListView.builder(
+                itemCount: snapshot.data.length,
+                itemBuilder: (context, index) {
+                  if (_searchController.text.isEmpty &&
+                      FormatUtils.cryptoCodeToName(
+                              snapshot.data[index]['numeratorSymbol'])
+                          .isNotEmpty) {
+                    return CurrencyList(index, snapshot.data);
+                  } else if (FormatUtils.cryptoCodeToName(
+                              snapshot.data[index]['numeratorSymbol'])
+                          .toLowerCase()
+                          .contains(_searchController.text.toLowerCase()) &&
+                      FormatUtils.cryptoCodeToName(
+                              snapshot.data[index]['numeratorSymbol'])
+                          .isNotEmpty) {
+                    return CurrencyList(index, snapshot.data);
+                  } else {
+                    return Container();
+                  }
+                },
+                physics: const BouncingScrollPhysics(
+                    parent: AlwaysScrollableScrollPhysics()),
               );
             }
           }),
