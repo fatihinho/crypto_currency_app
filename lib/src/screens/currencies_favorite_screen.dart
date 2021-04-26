@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:crypto_currency_app/src/constants/colors.dart';
 import 'package:crypto_currency_app/src/services/currency_api_service.dart';
 import 'package:crypto_currency_app/src/services/firestore_service.dart';
+import 'package:crypto_currency_app/src/widgets/admob_banner_widget.dart';
 import 'package:crypto_currency_app/src/widgets/currency_favorite_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -86,6 +87,7 @@ class _CurrenciesFavoriteScreenState extends State<CurrenciesFavoriteScreen> {
               }
             }
           }),
+      bottomNavigationBar: AdMobBanner(),
     );
   }
 }

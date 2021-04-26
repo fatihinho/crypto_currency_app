@@ -114,10 +114,7 @@ class _CurrencyDetailScreenState extends State<CurrencyDetailScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: CryptoDetails(this.widget.index, this.widget.data)),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: AdMobBanner(),
-          ),
+          AdMobBanner(),
         ],
       ),
     );
