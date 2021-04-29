@@ -80,6 +80,15 @@ class CoinLogo extends StatelessWidget {
 
       case 'MANA':
         return Image.network(logoUrl + '1966.png');
+
+      case 'MATIC':
+        return Image.network(logoUrl + '3890.png');
+
+      case 'SNX':
+        return Image.network(logoUrl + '2586.png');
+
+      case 'BAT':
+        return Image.network(logoUrl + '1697.png');
     }
     return Container();
   }

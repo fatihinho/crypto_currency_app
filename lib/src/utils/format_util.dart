@@ -49,6 +49,12 @@ class FormatUtils {
         return 'The Graph ($code)';
       case 'MANA':
         return 'Decentraland ($code)';
+      case 'MATIC':
+        return 'Polygon ($code)';
+      case 'SNX':
+        return 'Synthetix ($code)';
+      case 'BAT':
+        return 'Basic Attention Token ($code)';
     }
     return '';
   }
