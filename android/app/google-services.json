@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1014169302547:android:bba458d5410949d5eb31e6",
+        "mobilesdk_app_id": "1:1014169302547:android:16f4274b61e06ddfeb31e6",
         "android_client_info": {
-          "package_name": "com.example.crypto_currency_app"
+          "package_name": "com.fcinar.crypto_currency_app"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "1014169302547-4uhnpvcre46e9h7v7a0660dlokiimmqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fcinar.crypto_currency_app",
+            "certificate_hash": "4ea3db33506e38c2dc7ae4944cb7e302b5eefdf3"
+          }
+        },
         {
           "client_id": "1014169302547-sc70hkgkr7r2n1fgrnr4p6tdpinttoak.apps.googleusercontent.com",
           "client_type": 3
