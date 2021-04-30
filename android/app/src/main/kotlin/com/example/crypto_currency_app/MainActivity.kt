@@ -1,4 +1,4 @@
-package com.example.crypto_currency_app
+package com.fcinar.crypto_currency_app
 
 import io.flutter.embedding.android.FlutterActivity
 
